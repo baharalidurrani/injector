@@ -1,9 +1,25 @@
 {
-  "name": "Getting Started Example",
+  "name": "Injector",
   "version": "1.0",
-  "description": "Build an Extension!",
+  "description": "Building an injection Extension!",
   "manifest_version": 2,
   "browser_action": {
     "default_popup": "popup.html"
-  }
+  },
+  "content_scripts": [
+    {
+      "js": ["injector.js"],
+      "matches": [
+        "https://baharalidurrani.me/",
+        "https://prosto-visa.com.ua/*",
+        "https://www.google.com/*",
+        "https://www.bbc.com/*",
+        "http://scratchpads.eu/*",
+        "http://apache.org/*",
+        "http://www.ufl.edu/*",
+        "http://example.com/*"
+      ]
+    }
+  ],
+  "web_accessible_resources": ["driver.js"]
 }
