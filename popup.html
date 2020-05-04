@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <style>
-      button {
-        height: 30px;
-        width: 30px;
-        outline: none;
-      }
-    </style>
+    <link href="style.css" rel="stylesheet" />
   </head>
   <body>
     <h1>Welcome to Content Injector</h1>
+    <!-- Rounded switch -->
+    <label class="switch">
+      <input id="myToggle" type="checkbox" />
+      <span class="slider round"></span>
+    </label>
+    <div>
+      <select id="mySelect">
+        <option value="1">test1</option>
+        <option value="2" selected="selected">test2</option>
+        <option value="3">test3</option>
+      </select>
+    </div>
+    <script src="script.js"></script>
   </body>
 </html>
