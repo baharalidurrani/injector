@@ -20,6 +20,5 @@
         "http://example.com/*"
       ]
     }
-  ],
-  "web_accessible_resources": ["driver.js"]
+  ]
 }
