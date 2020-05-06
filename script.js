@@ -104,6 +104,12 @@ window.onload = function () {
       });
       const menu = document.getElementById("mySelect");
       menu.innerHTML = "";
+      let disabledOption = document.createElement("option");
+      disabledOption.setAttribute("disabled", "true");
+      disabledOption.setAttribute("selected", "true");
+      disabledOption.setAttribute("value", "");
+      disabledOption.innerText = " -- select a tour -- ";
+      menu.appendChild(disabledOption);
       if (site) {
         for (let i = 0; i < site.tours.length; i++) {
           let o = document.createElement("option");
