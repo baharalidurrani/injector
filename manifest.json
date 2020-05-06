@@ -6,24 +6,5 @@
   "browser_action": {
     "default_popup": "popup.html"
   },
-  "permissions": ["activeTab", "<all_urls>", "webNavigation"],
-  "content_scripts": [
-    {
-      "matches": [
-        "https://baharalidurrani.me/",
-        "https://prosto-visa.com.ua/*",
-        "https://www.google.com/*",
-        "https://www.bbc.com/*",
-        "http://scratchpads.eu/*",
-        "http://apache.org/*",
-        "http://www.ufl.edu/*",
-        "http://example.com/*"
-      ],
-      "css": ["dep/css/bootstrap-tour-standalone.min.css"],
-      "js": [
-        "dep/js/jquery-3.5.1.min.js",
-        "dep/js/bootstrap-tour-standalone.min.js"
-      ]
-    }
-  ]
+  "permissions": ["activeTab", "<all_urls>", "webNavigation"]
 }

@@ -2,7 +2,10 @@ const siteData = [
   { host: "www.google.com", tours: ["rws.t1", "rws.t1", "rws.t1"] },
   {
     host: "example.com",
-    tours: ["rws.t1", "http://rswdigital.com/_/serving/js/tours/exampleTour.js"]
+    tours: [
+      "http://rswdigital.com/_/serving/js/tours/exampleTour2.js",
+      "http://rswdigital.com/_/serving/js/tours/exampleTour.js"
+    ]
   },
   {
     host: "baharalidurrani.me",
@@ -10,7 +13,43 @@ const siteData = [
   }
 ];
 
-// chrome.webNavigation.onCompleted.addListener(function () {})
+chrome.webNavigation.onCompleted.addListener(function (details) {
+  var link = document.createElement("meta");
+  link.setAttribute("http-equiv", "Content-Security-Policy");
+  link.content = "upgrade-insecure-requests";
+  document.getElementsByTagName("head")[0].appendChild(link);
+
+  // var head = document.getElementsByTagName("HEAD")[0];
+  // var link = document.createElement("link");
+  // link.rel = "stylesheet";
+  // link.type = "text/css";
+  // link.href = "dep/css/bootstrap-tour-standalone.min.css";
+  // head.appendChild(link);
+  chrome.tabs.insertCSS({
+    file: "./dep/css/bootstrap-tour-standalone.min.css"
+  });
+
+  // var jq = document.createElement("script");
+  // // s.src = chrome.extension.getURL("driver.js");
+  // jq.src = "dep/js/jquery-3.5.1.min.js"(
+  //   document.head || document.documentElement
+  // ).appendChild(jq);
+  // jq.onload = function () {};
+  chrome.tabs.executeScript({ file: "./dep/js/jquery-3.5.1.min.js" });
+
+  // var boot = document.createElement("script");
+  // // s.src = chrome.extension.getURL("driver.js");
+  // boot.src = "dep/js/bootstrap-tour-standalone.min.js";
+  // (document.head || document.documentElement).appendChild(boot);
+  // boot.onload = function () {};
+  chrome.tabs.executeScript({
+    file: "./dep/js/bootstrap-tour-standalone.min.js"
+  });
+  // chrome.tabs.executeScript({
+  //   file: "./dep/js/my.js"
+  // });
+});
+
 window.onload = function () {
   // Step Toggle Functionality
   function startTour() {
@@ -102,7 +141,10 @@ window.onload = function () {
       return w.host === currentHost;
     });
     var applyTour = hostObj.tours[currentIndex];
-    console.log("hostObj.tours[currentIndex]", applyTour);
+    console.log("Tour selected:", applyTour);
+    chrome.tabs.executeScript({
+      code: `var applyTour = "${applyTour}"`
+    });
     function injectTour() {
       // var link = document.createElement("meta");
       // link.setAttribute("http-equiv", "Content-Security-Policy");
@@ -110,12 +152,9 @@ window.onload = function () {
       // document.getElementsByTagName("head")[0].appendChild(link);
 
       var tourTag = document.createElement("script");
-      // tour.src = chrome.extension.getURL("exampleTour.js");
       tourTag.id = "myTour";
-      tourTag.src = "http://rswdigital.com/_/serving/js/tours/exampleTour.js";
+      tourTag.src = applyTour;
       (document.head || document.documentElement).appendChild(tourTag);
-      // Start the tour
-      // tour.start();
     }
     chrome.tabs.executeScript({
       code: "(" + injectTour + ")();"
