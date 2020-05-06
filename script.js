@@ -3,20 +3,53 @@ const siteData = [
   { host: "example.com", tours: ["rws.t1", "rws.t1"] },
   {
     host: "baharalidurrani.me",
-    tours: ["rws.t1", "rws.t1", "rws.t1", "rws.t1"],
-  },
+    tours: ["rws.t1", "rws.t1", "rws.t1", "rws.t1"]
+  }
 ];
 
-// Step 1
-function getHost() {
-  var host = document.location.host;
-  return host;
-}
-// chrome.webNavigation.onCompleted.addListener(function () {
+// chrome.webNavigation.onCompleted.addListener(function () {})
 window.onload = function () {
+  // Step Toggle Functionality
+  function startTour() {
+    localStorage.removeItem("tour_end");
+    localStorage.setItem("tour_current_step", "0");
+  }
+  function endTour() {
+    localStorage.setItem("tour_end", "yes");
+  }
+  var myToggle = document.getElementById("myToggle");
+  myToggle.addEventListener("click", () => {
+    const toggleValue = myToggle.checked;
+    console.log("toggleValue", toggleValue);
+    myToggle.checked
+      ? chrome.tabs.executeScript({
+          code: "(" + startTour + ")();"
+        })
+      : chrome.tabs.executeScript({
+          code: "(" + endTour + ")();"
+        });
+  });
   chrome.tabs.executeScript(
     {
-      code: "(" + getHost + ")();", //argument here is a string but function.toString() returns function's code
+      code: 'localStorage.getItem("tour_end");'
+    },
+    (tourEnd) => {
+      console.log("getting tour end from storage", tourEnd);
+      tourEnd[0] === "yes"
+        ? (myToggle.checked = false)
+        : (myToggle.checked = true);
+    }
+  );
+  // :Step Toggle Functionality
+
+  // Step 1
+  function getHost() {
+    var host = document.location.host;
+    return host;
+  }
+  chrome.tabs.executeScript(
+    {
+      code: "(" + getHost + ")();" //argument here is a string but function.toString() returns function's code
     },
     (result) => {
       console.log("Host retrived:", result[0]);
@@ -25,7 +58,6 @@ window.onload = function () {
       var site = siteData.find(function (w) {
         return w.host === result[0];
       });
-      const tog = document.getElementById("myToggle");
       const menu = document.getElementById("mySelect");
       menu.innerHTML = "";
       if (site) {
@@ -37,26 +69,19 @@ window.onload = function () {
           menu.appendChild(o);
         }
       } else {
-        tog.disabled = true;
+        myToggle.disabled = true;
         menu.disabled = true;
       }
+      // :Step 2
     }
   );
-  // });
   // :Step 1
 
-  // window.onload = function () {
   var mySelect = document.getElementById("mySelect");
   mySelect.addEventListener("change", () => {
     const selectOption = mySelect.options[mySelect.selectedIndex];
     console.log("selectOption", selectOption);
     console.log("Value", selectOption.value);
     console.log("innerText", selectOption.innerText);
-  });
-
-  var myToggle = document.getElementById("myToggle");
-  myToggle.addEventListener("click", () => {
-    const toggleValue = myToggle.checked;
-    console.log("toggleValue", toggleValue);
   });
 };
