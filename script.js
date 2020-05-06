@@ -12,7 +12,8 @@ function getHost() {
   var host = document.location.host;
   return host;
 }
-chrome.webNavigation.onCompleted.addListener(function () {
+// chrome.webNavigation.onCompleted.addListener(function () {
+window.onload = function () {
   chrome.tabs.executeScript(
     {
       code: "(" + getHost + ")();", //argument here is a string but function.toString() returns function's code
@@ -41,10 +42,10 @@ chrome.webNavigation.onCompleted.addListener(function () {
       }
     }
   );
-});
-// :Step 1
+  // });
+  // :Step 1
 
-window.onload = function () {
+  // window.onload = function () {
   var mySelect = document.getElementById("mySelect");
   mySelect.addEventListener("change", () => {
     const selectOption = mySelect.options[mySelect.selectedIndex];
