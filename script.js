@@ -1,9 +1,32 @@
 const siteData = [
-  { host: "www.google.com", tours: ["rws.t1", "rws.t1", "rws.t1"] },
+  {
+    host: "www.google.com",
+    tours: [
+      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/googleBoot.js",
+      "rws.t1",
+      "rws.t1"
+    ]
+  },
+  {
+    host: "rswdigital.com",
+    tours: [
+      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/rswBoot.js",
+      "rws.t1",
+      "rws.t1"
+    ]
+  },
+  {
+    host: "127.0.0.1:5500",
+    tours: [
+      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/bootTour.js",
+      "rws.t1",
+      "rws.t1"
+    ]
+  },
   {
     host: "example.com",
     tours: [
-      "http://rswdigital.com/_/serving/js/tours/exampleTour2.js",
+      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/exampleTour2.js",
       "http://rswdigital.com/_/serving/js/tours/exampleTour.js"
     ]
   },
@@ -13,42 +36,39 @@ const siteData = [
   }
 ];
 
-chrome.webNavigation.onCompleted.addListener(function (details) {
-  var link = document.createElement("meta");
-  link.setAttribute("http-equiv", "Content-Security-Policy");
-  link.content = "upgrade-insecure-requests";
-  document.getElementsByTagName("head")[0].appendChild(link);
-
-  // var head = document.getElementsByTagName("HEAD")[0];
-  // var link = document.createElement("link");
-  // link.rel = "stylesheet";
-  // link.type = "text/css";
-  // link.href = "dep/css/bootstrap-tour-standalone.min.css";
-  // head.appendChild(link);
-  chrome.tabs.insertCSS({
-    file: "./dep/css/bootstrap-tour-standalone.min.css"
-  });
-
-  // var jq = document.createElement("script");
-  // // s.src = chrome.extension.getURL("driver.js");
-  // jq.src = "dep/js/jquery-3.5.1.min.js"(
-  //   document.head || document.documentElement
-  // ).appendChild(jq);
-  // jq.onload = function () {};
-  chrome.tabs.executeScript({ file: "./dep/js/jquery-3.5.1.min.js" });
-
-  // var boot = document.createElement("script");
-  // // s.src = chrome.extension.getURL("driver.js");
-  // boot.src = "dep/js/bootstrap-tour-standalone.min.js";
-  // (document.head || document.documentElement).appendChild(boot);
-  // boot.onload = function () {};
-  chrome.tabs.executeScript({
-    file: "./dep/js/bootstrap-tour-standalone.min.js"
-  });
-  // chrome.tabs.executeScript({
-  //   file: "./dep/js/my.js"
-  // });
-});
+// chrome.webNavigation.onCompleted.addListener(function (details) {
+// var link = document.createElement("meta");
+// link.setAttribute("http-equiv", "Content-Security-Policy");
+// link.content = "upgrade-insecure-requests";
+// document.getElementsByTagName("head")[0].appendChild(link);
+// var head = document.getElementsByTagName("HEAD")[0];
+// var link = document.createElement("link");
+// link.rel = "stylesheet";
+// link.type = "text/css";
+// link.href = "dep/css/bootstrap-tour-standalone.min.css";
+// head.appendChild(link);
+// chrome.tabs.insertCSS({
+//   file: "./dep/css/bootstrap-tour-standalone.min.css"
+// });
+// var jq = document.createElement("script");
+// // s.src = chrome.extension.getURL("driver.js");
+// jq.src = "dep/js/jquery-3.5.1.min.js"(
+//   document.head || document.documentElement
+// ).appendChild(jq);
+// jq.onload = function () {};
+// chrome.tabs.executeScript({ file: "./dep/js/jquery-3.5.1.min.js" });
+// var boot = document.createElement("script");
+// // s.src = chrome.extension.getURL("driver.js");
+// boot.src = "dep/js/bootstrap-tour-standalone.min.js";
+// (document.head || document.documentElement).appendChild(boot);
+// boot.onload = function () {};
+// chrome.tabs.executeScript({
+//   file: "./dep/js/bootstrap-tour-standalone.min.js"
+// });
+// chrome.tabs.executeScript({
+//   file: "./dep/js/my.js"
+// });
+// });
 
 window.onload = function () {
   // Step Toggle Functionality
@@ -88,8 +108,7 @@ window.onload = function () {
 
   // Step 1
   function getHost() {
-    var host = document.location.host;
-    return host;
+    return document.location.host;
   }
   chrome.tabs.executeScript(
     {
@@ -147,19 +166,25 @@ window.onload = function () {
       return w.host === currentHost;
     });
     var applyTour = hostObj.tours[currentIndex];
+    // var applyTour =
+    //   "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/bootTour.js";
     console.log("Tour selected:", applyTour);
     chrome.tabs.executeScript({
-      code: `var applyTour = "${applyTour}"`
+      code: `localStorage.setItem("applyTour", "${applyTour}");`
     });
     function injectTour() {
       // var link = document.createElement("meta");
       // link.setAttribute("http-equiv", "Content-Security-Policy");
       // link.content = "upgrade-insecure-requests";
       // document.getElementsByTagName("head")[0].appendChild(link);
-
+      try {
+        document.getElementById("myTour").remove();
+      } catch (error) {
+        console.log("No old tour found");
+      }
       var tourTag = document.createElement("script");
       tourTag.id = "myTour";
-      tourTag.src = applyTour;
+      tourTag.src = localStorage.getItem("applyTour");
       (document.head || document.documentElement).appendChild(tourTag);
     }
     chrome.tabs.executeScript({
