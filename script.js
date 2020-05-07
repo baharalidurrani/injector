@@ -1,10 +1,12 @@
 const siteData = [
   { host: "www.google.com", tours: ["rws.t1", "rws.t1", "rws.t1"] },
   { host: "example.com", tours: ["rws.t1", "rws.t1"] },
+  { host: "127.0.0.1:5500", tours: ["rws.t1", "rws.t1"] },
+  { host: "localhost:5500", tours: ["rws.t1", "rws.t1"] },
   {
     host: "baharalidurrani.me",
-    tours: ["rws.t1", "rws.t1", "rws.t1", "rws.t1"],
-  },
+    tours: ["rws.t1", "rws.t1", "rws.t1", "rws.t1"]
+  }
 ];
 
 // Step 1
@@ -16,7 +18,7 @@ function getHost() {
 window.onload = function () {
   chrome.tabs.executeScript(
     {
-      code: "(" + getHost + ")();", //argument here is a string but function.toString() returns function's code
+      code: "(" + getHost + ")();" //argument here is a string but function.toString() returns function's code
     },
     (result) => {
       console.log("Host retrived:", result[0]);
@@ -44,10 +46,19 @@ window.onload = function () {
   );
   // });
   // :Step 1
-
+  function at() {
+    var mytour = document.createElement("script");
+    // s.src = chrome.extension.getURL("driver.js");
+    mytour.src =
+      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/bootTour.js";
+    (document.head || document.documentElement).appendChild(mytour);
+  }
   // window.onload = function () {
   var mySelect = document.getElementById("mySelect");
   mySelect.addEventListener("change", () => {
+    chrome.tabs.executeScript({
+      code: "(" + at + ")();"
+    });
     const selectOption = mySelect.options[mySelect.selectedIndex];
     console.log("selectOption", selectOption);
     console.log("Value", selectOption.value);
