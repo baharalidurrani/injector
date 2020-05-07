@@ -63,3 +63,11 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+body {
+  width: 500px;
+}
+
+.center {
+  margin: 0 auto;
+}
