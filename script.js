@@ -32,7 +32,12 @@ const siteData = [
   },
   {
     host: "baharalidurrani.me",
-    tours: ["rws.t1", "rws.t1", "rws.t1", "rws.t1"]
+    tours: [
+      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot.js",
+      "rws.t1",
+      "rws.t1",
+      "rws.t1"
+    ]
   }
 ];
 
