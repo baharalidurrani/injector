@@ -75,45 +75,45 @@ const siteData = [
 // });
 
 window.onload = function () {
-  // Step Toggle Functionality
-  function startTour() {
-    localStorage.removeItem("tour_end");
-    // localStorage.setItem("tour_current_step", "0");
-    // Start the tour
-    // tour.start();
-    let startScript = document.createElement("script");
-    startScript.innerText = "tour.start();";
-    (document.head || document.documentElement).appendChild(startScript);
-  }
-  function endTour() {
-    // localStorage.setItem("tour_end", "yes");
-    let startScript = document.createElement("script");
-    startScript.innerText = "tour.end();";
-    (document.head || document.documentElement).appendChild(startScript);
-  }
-  var myToggle = document.getElementById("myToggle");
-  myToggle.addEventListener("click", () => {
-    const toggleValue = myToggle.checked;
-    console.log("toggleValue", toggleValue);
-    myToggle.checked
-      ? chrome.tabs.executeScript({
-          code: "(" + startTour + ")();"
-        })
-      : chrome.tabs.executeScript({
-          code: "(" + endTour + ")();"
-        });
-  });
-  chrome.tabs.executeScript(
-    {
-      code: 'localStorage.getItem("tour_end");'
-    },
-    (tourEnd) => {
-      console.log("getting tour end from storage", tourEnd);
-      tourEnd[0] === "yes"
-        ? (myToggle.checked = false)
-        : (myToggle.checked = true);
-    }
-  );
+  // // Step Toggle Functionality
+  // function startTour() {
+  //   localStorage.removeItem("tour_end");
+  //   // localStorage.setItem("tour_current_step", "0");
+  //   // Start the tour
+  //   // tour.start();
+  //   let startScript = document.createElement("script");
+  //   startScript.innerText = "tour.start();";
+  //   (document.head || document.documentElement).appendChild(startScript);
+  // }
+  // function endTour() {
+  //   // localStorage.setItem("tour_end", "yes");
+  //   let startScript = document.createElement("script");
+  //   startScript.innerText = "tour.end();";
+  //   (document.head || document.documentElement).appendChild(startScript);
+  // }
+  // var myToggle = document.getElementById("myToggle");
+  // myToggle.addEventListener("click", () => {
+  //   const toggleValue = myToggle.checked;
+  //   console.log("toggleValue", toggleValue);
+  //   myToggle.checked
+  //     ? chrome.tabs.executeScript({
+  //         code: "(" + startTour + ")();"
+  //       })
+  //     : chrome.tabs.executeScript({
+  //         code: "(" + endTour + ")();"
+  //       });
+  // });
+  // chrome.tabs.executeScript(
+  //   {
+  //     code: 'localStorage.getItem("tour_end");'
+  //   },
+  //   (tourEnd) => {
+  //     console.log("getting tour end from storage", tourEnd);
+  //     tourEnd[0] === "yes"
+  //       ? (myToggle.checked = false)
+  //       : (myToggle.checked = true);
+  //   }
+  // );
   // :Step Toggle Functionality
 
   // Step 1
