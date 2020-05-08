@@ -136,11 +136,11 @@ window.onload = function () {
       if (site) {
         for (let i = 0; i < site.tours.length; i++) {
           let anchorTour = document.createElement("a");
-          anchorTour.setAttribute("href", "#");
+          anchorTour.setAttribute("href", site.tours[i]);
           anchorTour.setAttribute("class", "atag");
           anchorTour.setAttribute("id", i);
           anchorTour.setAttribute("style", "display: block");
-          anchorTour.innerText = site.tours[i];
+          anchorTour.innerText = `Tour ${i + 1}`;
           menu.appendChild(anchorTour);
         }
         // function securityPolicy() {
@@ -182,7 +182,7 @@ window.onload = function () {
           //   return w.host === currentHost;
           // });
           // var applyTour = hostObj.tours[currentIndex];
-          let applyTour = atags[i].innerText;
+          let applyTour = atags[i].href;
           // var applyTour =
           //   "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/bootTour.js";
           console.log("Tour selected:", applyTour);
