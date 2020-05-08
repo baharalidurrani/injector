@@ -187,7 +187,7 @@ window.onload = function () {
           //   "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/bootTour.js";
           console.log("Tour selected:", applyTour);
           chrome.tabs.executeScript({
-            code: `localStorage.removeItem("applyTour");localStorage.setItem("applyTour", "${applyTour}");`
+            code: `localStorage.setItem("applyTour", "${applyTour}");`
           });
           function injectTour() {
             // var link = document.createElement("meta");
@@ -199,6 +199,7 @@ window.onload = function () {
             } catch (error) {
               console.log("No old tour found");
             }
+            localStorage.removeItem("tour_end");
             var tourTag = document.createElement("script");
             tourTag.id = "myTour";
             tourTag.src = localStorage.getItem("applyTour");
