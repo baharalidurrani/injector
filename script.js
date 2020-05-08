@@ -172,6 +172,7 @@ window.onload = function () {
       atags[i].addEventListener(
         "click",
         () => {
+          window.event.preventDefault();
           console.log("Click event fired on:", atags[i]);
           // const selectOption = mySelect.options[mySelect.selectedIndex];
           // var currentHost = selectOption.innerText;
