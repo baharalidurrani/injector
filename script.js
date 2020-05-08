@@ -207,6 +207,7 @@ window.onload = function () {
           chrome.tabs.executeScript({
             code: "(" + injectTour + ")();"
           });
+          window.close();
         },
         false
       );
