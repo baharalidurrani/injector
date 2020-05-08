@@ -3,22 +3,24 @@
   "version": "1.0",
   "description": "Building an injection Extension!",
   "manifest_version": 2,
+  "icons": {
+    "64": "icons/green.png"
+  },
   "browser_action": {
+    "default_icon": "icons/red.png",
     "default_popup": "popup.html"
   },
   "permissions": ["activeTab", "<all_urls>", "webNavigation"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
   "content_scripts": [
     {
       "js": ["injector.js"],
       "matches": [
         "https://baharalidurrani.me/",
-        "https://prosto-visa.com.ua/*",
         "https://www.google.com/*",
-        "https://www.bbc.com/*",
-        "http://scratchpads.eu/*",
-        "http://apache.org/*",
-        "http://www.ufl.edu/*",
-        "http://example.com/*",
         "http://127.0.0.1:5500/*",
         "http://localhost:*/*"
       ]

@@ -1,3 +1,8 @@
+chrome.runtime.sendMessage({
+  action: "updateIcon",
+  value: true
+});
+
 var link = document.createElement("meta");
 link.setAttribute("http-equiv", "Content-Security-Policy");
 link.content = "upgrade-insecure-requests";
