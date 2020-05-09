@@ -24,13 +24,6 @@ const siteData = [
     ]
   },
   {
-    host: "example.com",
-    tours: [
-      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/exampleTour2.js",
-      "http://rswdigital.com/_/serving/js/tours/exampleTour.js"
-    ]
-  },
-  {
     host: "baharalidurrani.me",
     tours: [
       "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot.js",
@@ -136,9 +129,37 @@ window.onload = function () {
       if (site) {
         for (let i = 0; i < site.tours.length; i++) {
           let anchorTour = document.createElement("a");
-          anchorTour.setAttribute("href", site.tours[i]);
-          anchorTour.setAttribute("class", "atag");
-          anchorTour.setAttribute("id", i);
+          anchorTour.onclick = () => {
+            let applyTouri = site.tours[i];
+            console.log("Tour selected:", applyTouri);
+            chrome.tabs.executeScript({
+              code: `localStorage.setItem("applyTour", "${applyTouri}");`
+            });
+            function injectTour() {
+              // var link = document.createElement("meta");
+              // link.setAttribute("http-equiv", "Content-Security-Policy");
+              // link.content = "upgrade-insecure-requests";
+              // document.getElementsByTagName("head")[0].appendChild(link);
+              try {
+                document.getElementById("myTour").remove();
+              } catch (error) {
+                console.log("No old tour found");
+              }
+              localStorage.removeItem("tour_end");
+              var tourTag = document.createElement("script");
+              tourTag.id = "myTour";
+              tourTag.src = localStorage.getItem("applyTour");
+              (document.head || document.documentElement).appendChild(tourTag);
+            }
+            chrome.tabs.executeScript({
+              code: "(" + injectTour + ")();"
+            });
+            window.close();
+          };
+          // anchorTour.setAttribute("name", site.tours[i]);
+          anchorTour.setAttribute("href", "#");
+          // anchorTour.setAttribute("class", "atag");
+          // anchorTour.setAttribute("id", i);
           anchorTour.setAttribute("style", "display: block");
           anchorTour.innerText = `Tour ${i + 1}`;
           menu.appendChild(anchorTour);
@@ -154,65 +175,65 @@ window.onload = function () {
         // });
       } else {
         menu.innerText = "Sorry This Website is not supported yet!";
-        myToggle.disabled = true;
-        menu.disabled = true;
+        // myToggle.disabled = true;
+        // menu.disabled = true;
       }
       // :Step 2
     }
   );
   // :Step 1
 
-  setTimeout(() => {
-    var atags = document.getElementsByClassName("atag");
-    // var atags = document.querySelectorAll(".atag");
-    console.log("atags", atags);
+  // setTimeout(() => {
+  //   var atags = document.getElementsByClassName("atag");
+  //   // var atags = document.querySelectorAll(".atag");
+  //   console.log("atags", atags);
 
-    for (let i = 0; i < atags.length; i++) {
-      // var atag = atags[i];
-      atags[i].addEventListener(
-        "click",
-        () => {
-          window.event.preventDefault();
-          console.log("Click event fired on:", atags[i]);
-          // const selectOption = mySelect.options[mySelect.selectedIndex];
-          // var currentHost = selectOption.innerText;
-          // var currentIndex = selectOption.value - 1;
-          // console.log("index", currentIndex);
-          // console.log("host", currentHost);
-          // let hostObj = siteData.find(function (w) {
-          //   return w.host === currentHost;
-          // });
-          // var applyTour = hostObj.tours[currentIndex];
-          let applyTour = atags[i].href;
-          // var applyTour =
-          //   "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/bootTour.js";
-          console.log("Tour selected:", applyTour);
-          chrome.tabs.executeScript({
-            code: `localStorage.setItem("applyTour", "${applyTour}");`
-          });
-          function injectTour() {
-            // var link = document.createElement("meta");
-            // link.setAttribute("http-equiv", "Content-Security-Policy");
-            // link.content = "upgrade-insecure-requests";
-            // document.getElementsByTagName("head")[0].appendChild(link);
-            try {
-              document.getElementById("myTour").remove();
-            } catch (error) {
-              console.log("No old tour found");
-            }
-            localStorage.removeItem("tour_end");
-            var tourTag = document.createElement("script");
-            tourTag.id = "myTour";
-            tourTag.src = localStorage.getItem("applyTour");
-            (document.head || document.documentElement).appendChild(tourTag);
-          }
-          chrome.tabs.executeScript({
-            code: "(" + injectTour + ")();"
-          });
-          window.close();
-        },
-        false
-      );
-    }
-  }, 0);
+  //   for (let i = 0; i < atags.length; i++) {
+  //     // var atag = atags[i];
+  //     atags[i].addEventListener(
+  //       "click",
+  //       () => {
+  //         window.event.preventDefault();
+  //         console.log("Click event fired on:", atags[i]);
+  //         // const selectOption = mySelect.options[mySelect.selectedIndex];
+  //         // var currentHost = selectOption.innerText;
+  //         // var currentIndex = selectOption.value - 1;
+  //         // console.log("index", currentIndex);
+  //         // console.log("host", currentHost);
+  //         // let hostObj = siteData.find(function (w) {
+  //         //   return w.host === currentHost;
+  //         // });
+  //         // var applyTour = hostObj.tours[currentIndex];
+  //         let applyTour = atags[i].href;
+  //         // var applyTour =
+  //         //   "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/bootTour.js";
+  //         console.log("Tour selected:", applyTour);
+  //         chrome.tabs.executeScript({
+  //           code: `localStorage.setItem("applyTour", "${applyTour}");`
+  //         });
+  //         function injectTour() {
+  //           // var link = document.createElement("meta");
+  //           // link.setAttribute("http-equiv", "Content-Security-Policy");
+  //           // link.content = "upgrade-insecure-requests";
+  //           // document.getElementsByTagName("head")[0].appendChild(link);
+  //           try {
+  //             document.getElementById("myTour").remove();
+  //           } catch (error) {
+  //             console.log("No old tour found");
+  //           }
+  //           localStorage.removeItem("tour_end");
+  //           var tourTag = document.createElement("script");
+  //           tourTag.id = "myTour";
+  //           tourTag.src = localStorage.getItem("applyTour");
+  //           (document.head || document.documentElement).appendChild(tourTag);
+  //         }
+  //         chrome.tabs.executeScript({
+  //           code: "(" + injectTour + ")();"
+  //         });
+  //         window.close();
+  //       },
+  //       false
+  //     );
+  //   }
+  // }, 0);
 };
