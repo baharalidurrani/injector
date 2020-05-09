@@ -33,8 +33,7 @@ var siteData = [
         name: "Other Tour Bahar"
       },
       {
-        link:
-          "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot3.js",
+        link: "https://pensive-davinci-b144ff.netlify.app/hubby.js",
         name: "Last Tour Ryan"
       }
     ]
