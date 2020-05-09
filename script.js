@@ -1,34 +1,62 @@
-const siteData = [
+var siteData = [
   {
     host: "www.google.com",
     tours: [
-      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/googleBoot.js",
-      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/googleBoot2.js",
-      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/googleBoot3.js"
-    ]
-  },
-  {
-    host: "rswdigital.com",
-    tours: [
-      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/rswBoot.js",
-      "rws.t1",
-      "rws.t1"
-    ]
-  },
-  {
-    host: "127.0.0.1:5500",
-    tours: [
-      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/bootTour.js",
-      "rws.t1",
-      "rws.t1"
+      {
+        link:
+          "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/googleBoot.js",
+        name: "Something Google Tour"
+      },
+      {
+        link:
+          "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/googleBoot2.js",
+        name: "Other Google Tour"
+      },
+      {
+        link:
+          "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/googleBoot3.js",
+        name: "Last Google Tour"
+      }
     ]
   },
   {
     host: "baharalidurrani.me",
     tours: [
-      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot.js",
-      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot2.js",
-      "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot3.js"
+      {
+        link:
+          "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot.js",
+        name: "Something Tour Durrani"
+      },
+      {
+        link:
+          "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot2.js",
+        name: "Other Tour Bahar"
+      },
+      {
+        link:
+          "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot3.js",
+        name: "Last Tour Ryan"
+      }
+    ]
+  },
+  {
+    host: "127.0.0.1:5500",
+    tours: [
+      {
+        link:
+          "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot.js",
+        name: "Something Tour Name"
+      },
+      {
+        link:
+          "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot2.js",
+        name: "Other Tour Name"
+      },
+      {
+        link:
+          "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot3.js",
+        name: "Last Tour Name"
+      }
     ]
   }
 ];
@@ -130,7 +158,7 @@ window.onload = function () {
         for (let i = 0; i < site.tours.length; i++) {
           let anchorTour = document.createElement("a");
           anchorTour.onclick = () => {
-            let applyTouri = site.tours[i];
+            let applyTouri = site.tours[i].link;
             console.log("Tour selected:", applyTouri);
             chrome.tabs.executeScript({
               code: `localStorage.setItem("applyTour", "${applyTouri}");`
@@ -161,7 +189,7 @@ window.onload = function () {
           // anchorTour.setAttribute("class", "atag");
           // anchorTour.setAttribute("id", i);
           anchorTour.setAttribute("style", "display: block");
-          anchorTour.innerText = `Tour ${i + 1}`;
+          anchorTour.innerText = site.tours[i].name;
           menu.appendChild(anchorTour);
         }
         // function securityPolicy() {
