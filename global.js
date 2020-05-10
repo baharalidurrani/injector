@@ -72,5 +72,25 @@ var siteData = [
         name: "Last Tour Name"
       }
     ]
+  },
+  {
+    host: "helppoint.myshopify.com",
+    tours: [
+      {
+        link:
+          "https://tender-noether-fe0a8b.netlify.app/dep/js/tours/shopifyHelpBoot.js",
+        name: "Something Tour Name"
+      },
+      {
+        link:
+          "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot2.js",
+        name: "Other Tour Name"
+      },
+      {
+        link:
+          "https://baharalidurrani.gitlab.io/resume/assets/dep/js/tours/baharBoot3.js",
+        name: "Last Tour Name"
+      }
+    ]
   }
 ];
