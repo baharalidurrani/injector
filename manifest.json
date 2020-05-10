@@ -12,7 +12,7 @@
   },
   "permissions": ["activeTab", "<all_urls>", "webNavigation"],
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["global.js", "background.js"],
     "persistent": false
   },
   "content_scripts": [
