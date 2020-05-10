@@ -39,6 +39,21 @@ var siteData = [
     ]
   },
   {
+    host: "prosto-visa.com.ua",
+    tours: [
+      {
+        link:
+          "https://tender-noether-fe0a8b.netlify.app/dep/js/tours/prostoBoot.js",
+        name: "Something Tour Durrani"
+      },
+      {
+        link:
+          "https://tender-noether-fe0a8b.netlify.app/dep/js/tours/prostoBoot2.js",
+        name: "Other Tour Bahar"
+      }
+    ]
+  },
+  {
     host: "127.0.0.1:5500",
     tours: [
       {
